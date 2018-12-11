@@ -1,0 +1,11 @@
+exportPattern("^[[:alpha:]]+")
+
+importFrom("grDevices", "colorRampPalette", "dev.off", "grey", "pdf",
+                "rgb", "tiff")
+importFrom("graphics", "abline", "axis", "hist", "layout", "lines",
+                "mtext", "par", "plot", "points", "polygon", "rect", "text")
+importFrom("methods", "show")
+importFrom("stats", "as.formula", "density", "ecdf", "quantile", "sd")
+importFrom("utils", "read.csv", "download.file", "unzip")
+
+
