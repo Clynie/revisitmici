@@ -20,9 +20,10 @@ plot_emulated(sim_data, em_data, calib_data, calib_sim, calib_em, a_type,
 
 \item{a_type}{Analysis type: MICI or NoMICI.}
 
-\item{time}{Year of projections (deprecated: only 2100 are in input csv file).}
+\item{time}{Year of projections (deprecated: only 2100 in data).}
 
-\item{calib_era}{Which era(s) to use for calibration (deprecated: only threeEras is tested).}
+\item{calib_era}{Which era(s) to use for calibration (deprecated:
+only threeEras is tested).}
 
 \item{cred_list}{List of credibility thresholds for data file.}
 

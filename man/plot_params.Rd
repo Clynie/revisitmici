@@ -9,7 +9,7 @@ plot_params(var_plot, param_list, sim_inputs, sim_outputs, em_data)
 \arguments{
 \item{var_plot}{Variable to plot (deprecated: only uses RCP8.5 at 2100).}
 
-\item{param_list}{List of parameters (deprecated: VCLIF, CREVLIQ and OCFAC).}
+\item{param_list}{List of parameters (deprecated: VCLIF, CREVLIQ, OCFAC).}
 
 \item{sim_inputs}{Simulator parameter values.}
 

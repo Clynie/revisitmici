@@ -115,7 +115,7 @@ main <- function(analysis_type) {
   if (analysis_type == "SimHigh") pliocene_range <- "high"
 
   # Ensemble size and design
-  nbig <- 100
+  nbig <- 10000
   a_type <- analysis_type
   expt_design_name <- NA
   if (a_type == "MICI") expt_design_name <- "UnifLHSContBias"
@@ -179,65 +179,10 @@ main <- function(analysis_type) {
   # Load Ritz data for main Figure 1b
   if (a_type == "NoMICI") {
 
-    # This RData file is in the SI of Ritz et al. (2015) Nature
-    if (!exists("ritz_dens")) {
-
-      print("Downloading Ritz data file from Nature...")
-
-      nature_file <- "nature16147-s3.zip"
-      nature_rdata_file <- "untitled folder/2015-03-03882B-Ritz_et_al_Nature_projections.gz"
-      rdata_file <- "Ritz_et_al_Nature_projections.RData"
-
-      # Download from Nature
-      download.file(sprintf("https://media.nature.com/original/nature-assets/nature/journal/v528/n7580/extref/%s", nature_file),
-                    destfile = sprintf("data/%s", nature_file))
-
-      print("Unzipping file and moving RData to data/")
-      unzip(sprintf("data/%s", nature_file), exdir = "data")
-      system("gunzip 'data/untitled folder/2015-03-03882B-Ritz_et_al_Nature_projections.gz'")
-      system(sprintf("mv 'data/untitled folder/2015-03-03882B-Ritz_et_al_Nature_projections' data/%s", rdata_file))
-
-      print("Creating stripped down RData file for 2100")
-      load(sprintf("data/%s", rdata_file))
-
-      # Get original posterior density estimate to plot
-      ritz_dens <- densdata[["2100"]]
-      ritz_mode <- 4.79
-
-      # Get quantiles (these are from posterior empirical cdf)
-      ritz_q <- c(0.05, 0.25, 0.50, 0.75, 0.95)
-      ritz_quant <- list()
-      for (rr in ritz_q) {
-        ritz_quant[[paste("q", rr, sep = "")]] <-
-          min( ecdfdata[[ "2100" ]]$x[ ecdfdata[[ "2100" ]]$y >= rr ] )
-      }
-      save(ritz_dens, ritz_quant, ritz_mode,
-           file = "data/Ritz_et_al_Nature_projections_2100.RData" )
-      print("Tidying up.")
-      system(sprintf("rm -r 'data/untitled folder' data/__MACOSX data/%s data/%s", nature_file, rdata_file))
-
-    }
-
-    # Make available to other functions
-    e$ritz_d <- ritz_dens
-    e$ritz_q <- ritz_quant
-    e$ritz_m <- ritz_mode
-
-    # Contains original posterior density estimate to plot
-   # e$ritz_dens <- densdata[["2100"]]
-
-    # Get quantiles (these are from posterior empirical cdf)
-    #ritz_q <- c(0.05, 0.25, 0.50, 0.75, 0.95)
-    #e$ritz_quant <- list()
-    #for (rr in ritz_q) {
-    #  e$ritz_quant[[paste("q", rr, sep = "")]] <-
-    #    min( ecdfdata[[ "2100" ]]$x[ ecdfdata[[ "2100" ]]$y >= rr ] )
-    #}
-
-    # But mode is recalculated from original data with new bandwidth
-    # (too hard/slow to reproduce calculation here)
-    #e$ritz_quant[["mode"]] <- 4.79
-
+    e$ritz_d <- revisitmici::ritz_dens
+    e$ritz_q <- revisitmici::ritz_quant
+    # Mode recalculated since Ritz et al. (2015) with narrower bandwidth (cm)
+    e$ritz_m <- 4.79
   }
 
   # ____________________________________________________________________________

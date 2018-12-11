@@ -13,7 +13,8 @@ plot_simulated(sim_data, calib_sim, pliocene_range, chebyshev)
 
 \item{pliocene_range}{Name of Pliocene range (used for plot details).}
 
-\item{chebyshev}{k-values for Chebyshev inequality intervals to output to text file.}
+\item{chebyshev}{k-values for Chebyshev inequality intervals to output
+to text file.}
 }
 \description{
 Plot DeConto and Pollard (2016) simulator data.

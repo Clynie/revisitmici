@@ -100,23 +100,27 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
     # Calibrate emulated with Pliocene and LIG
     if (source == "Emulated") {
 
-      # Bit convoluted: take mean of current min and fixed max (defined as mean + 'error')
-      # 'Error' down from mean is difference between this and current min; use for lower bound
+      # Bit convoluted: take mean of current min and fixed max
+      # 'Error' down from mean is difference between this and current min
       plio_obs <- mean(c(
         plio_min, calib_data[["PLIO"]][1] + calib_data[["PLIO"]][2]
       ))
       plio_err <- plio_obs - plio_min
-      tot_err_down <- sqrt((plio_err ** 2 + e$discrep[["PLIO"]] ** 2 +  em_data[, "PLIO_sd"] ** 2))
+      tot_err_down <- sqrt((plio_err ** 2 + e$discrep[["PLIO"]] ** 2 +
+                              em_data[, "PLIO_sd"] ** 2))
 
       # Error up i.e. for upper bound is usual mean + usual total error
-      tot_err_up <- sqrt((calib_data[["PLIO"]][2] ** 2 + e$discrep[["PLIO"]] ** 2 +  em_data[, "PLIO_sd"] ** 2))
+      tot_err_up <- sqrt((calib_data[["PLIO"]][2] ** 2 +
+                            e$discrep[["PLIO"]] ** 2 +
+                            em_data[, "PLIO_sd"] ** 2))
 
       # Indices
       calib_plio_down <- em_data[, "PLIO"] > plio_obs - tot_err_down
       calib_plio_up <- em_data[, "PLIO"] < calib_data[["PLIO"]][1] + tot_err_up
 
       # Calibration of emulated with both LIG and current Pliocene range is here
-      em_plio_post <- em_data[calib_em[["LIG"]] & calib_plio_up & calib_plio_down, var_future]
+      em_plio_post <- em_data[calib_em[["LIG"]] &
+                              calib_plio_up & calib_plio_down, var_future]
 
     }
 
