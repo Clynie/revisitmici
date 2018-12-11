@@ -11,6 +11,8 @@ Description: This code reproduces the main results from Edwards et al. (2019)
     sensitivity tests for discrepancy (zero and double) and VCLIF 4 km/a by
     editing main.R. The only aspects not included are non-2100 results and 
     leave-one-out validation of the emulator. 
+URL: https://github.com/tamsinedwards/revisitmici
+BugReports: https://github.com/tamsinedwards/revisitmici/issues
 License: CC0
 Encoding: UTF-8
 LazyData: true
