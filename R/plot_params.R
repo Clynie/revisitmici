@@ -1,12 +1,15 @@
 plot_params <-
-  function(var_plot, param_list, sim_inputs, sim_outputs, em_data) {
-  #' Plot RCP8.5 at 2100 versus 3 parameters.
+  function(sim_inputs, sim_outputs, em_data, var_plot = "RCP85_2100", param_list = c("VCLIF", "CREVLIQ", "OCFAC")) {
+  #' Plot RCP8.5 projections at 2100 versus three parameters.
   #'
-  #' @param var_plot Variable to plot (deprecated: only uses RCP8.5 at 2100).
-  #' @param param_list List of parameters (deprecated: VCLIF, CREVLIQ, OCFAC).
+  #' For Extended Data Figure 3. In theory, this can be used to plot any emulated variables vs parameters,
+  #' i.e. using any member of vars_to_emulate in main() (three past eras and three RCPs at 2100) as the option var_plot, but this is untested.
+  #' Similarly, using a non-standard param_list (i.e. fewer than these 3, or "BIAS") is untested.
   #' @param sim_inputs Simulator parameter values.
   #' @param sim_outputs Simulator variable values.
   #' @param em_data Emulator parameter and variable values.
+  #' @param var_plot Variable to plot (deprecated: only RCP8.5 at 2100 is tested).
+  #' @param param_list List of parameters (deprecated: only this list is tested).
 
   # ____________________________________________________________________________
   # EXTENDED DATA FIGURE 7: RCP8.5 at 2100 vs 3 parameters

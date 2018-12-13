@@ -1,29 +1,24 @@
 #___________________________________________________________________
 # MAIN STEERING FILE
-# 1. Environment for variables used across functions
-# 2. Short add_scale function for ED Figure 4 legend
-# 3. main(analysis_type): set up and run analysis, calling functions in other files
-#' Environment for useful variables.
-#'
+# 1. Line defining environment for variables used across functions
+# 2. Short add_scale() function for ED Figure 4 legend
+# 3. Main function main(): set up and run analysis, calling functions in other files
 
+#' Environment for useful variables.
 e <- new.env(parent = emptyenv())
-# Now can assign variables called e$varname
+# Now can assign variables called e$varname to use anywhere
 
 add_scale <- function(legbreaks, leglabels, col, xlim, ylim, cex = par("cex")) {
-  #' Add colour scale to figure.
+  #' Colour scale.
   #'
-  #' @param legbreaks Legend breaks.
-  #' @param leglabels Legend labels.
-  #' @param col Colours.
-  #' @param xlim X range.
-  #' @param ylim Y range.
+  #' Add colour scale to a figure. Adapted from code by Jonty Rougier.
+  #'
+  #' @param legbreaks Set of legend breaks.
+  #' @param leglabels Set of legend labels.
+  #' @param col Set of colours.
+  #' @param xlim X min, max for placement.
+  #' @param ylim Y min, max for placement.
   #' @param cex Text size (optional).
-  #' add_scale(breaks_SLE, sprintf("%.1f", breaks_SLE), colrng_SLE,
-  #' xlim = c(9, 9.5), ylim = c(4, 8), cex = 0.7)
-  # ____________________________________________________________________________
-  # Add colour scale to figure (only used for ED Figure 4)
-  # Adapted from code by Jonty Rougier.
-  # ____________________________________________________________________________
 
   n <- length(legbreaks)
   stopifnot(length(col) == n - 1)
@@ -64,37 +59,49 @@ add_scale <- function(legbreaks, leglabels, col, xlim, ylim, cex = par("cex")) {
   })
 }
 
-main <- function(analysis_type) {
-  #' Main steering function.
+main <- function(analysis_type, test = FALSE, calib_era = "threeEras", discrep_PLIO = 5, discrep_LIG = 2, discrep_present = 0.5, VCLIF_max = 5) {
+  #' Run revisitmici analysis.
   #'
-  #' This is a test paragraph.
+  #' This is the main steering function to run the analysis for "Revisiting Antarctic ice loss due to marine ice
+  #' cliff instability", producing figures and numerical output for Antarctic projections at 2100.
+  #' All results for figures and tables can be generated except timeseries projections (Figures 2, 3)
+  #' and emulator validation (Figure 6). Results are given for Figure 4 and ED Figure 5, but the manuscript figures are not plotted.
   #'
-  #' These are the details.
+  #' All argument combinations to reproduce results are given in "Examples" below. N.B. Currently does not check
+  #' if any calibration arguments are provided but unused in analysis type: will just ignore them.
   #'
-  #' @param analysis_type Analysis type: MICI, NoMICI or SimHigh.
+  #' @param analysis_type Analysis type. Options: "MICI", "NoMICI" or "SimHigh".
+  #' @param test If TRUE, sets emulator ensemble size to N = 500 instead of 10,000.
+  #' @param calib_era Which eras to calibrate with. Default = "threeEras" (Pliocene, Last interglacial
+  #'and 1992-2017). Other options = "palaeo" (Pliocene and LIG only), "present" (1992-2017 only).
+  #' @param discrep_PLIO Pliocene model discrepancy in metres. Default = 5.
+  #' Set to 0 or 10 for sensitivity analyses in ED Figure 5.
+  #' @param discrep_LIG Last Interglacial model discrepancy in metres. Default = 2. Set to 0 or 4 for sensitivity analyses in ED Figure 5.
+  #' @param discrep_present 1992-2017 model discrepancy in cm. Default = 0.5.
+  #' Set to 0 or 1 for sensitivity analyses in ED Figure 5.
+  #' @param VCLIF_max Maximum ice wastage parameter value in km per year. Default = 5 and cannot be larger.
+  #' Sensitivity analysis in ED Figure 5 uses 4 km/a.
+  #' @examples
+  #' \dontrun{
+  #' # Main projections:
+  #' main("MICI") # Figure 1a; ED Figures 1, 2a,b, 3, 4a, 7
+  #' main("No MICI") # Figure 1b; ED Figure 4c
+  #' main("SimHigh") # ED Figure 2b,c
+  #'
+  #' # Sensitivity tests for ED Figure 5:
+  #' main("MICI", calib_era = "palaeo")
+  #' main("MICI", calib_era = "present")
+  #' main("MICI", discrep_PLIO = 10, discrep_LIG = 4, discrep_present = 1)
+  #' main("MICI", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+  #' main("MICI", calib_era = "palaeo", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+  #' main("MICI", VCLIF_max = 4)
+  #' main("NoMICI", calib_era = "palaeo")
+  #' main("NoMICI", calib_era = "present")
+  #' main("NoMICI", discrep_PLIO = 10, discrep_LIG = 4, discrep_present = 1)
+  #' main("NoMICI", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+  #' main("NoMICI", calib_era = "palaeo", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+  #' }
 
-  # ____________________________________________________________________________
-  # RUN ANALYSIS: main("MICI"); main("NoMICI"); main("SimHigh")
-  #
-  # ANALYSIS SETTINGS:
-  #
-  # MODEL DISCREPANCY VALUES
-  e$discrep <- list()
-
-  # Pliocene model discrepancy in m: default = 5
-  e$discrep[["PLIO"]] <- 5
-  #
-  # Last Interglacial model discrepancy in m: default = 2
-  e$discrep[["LIG"]] <- 2
-  #
-  # 1992-2017 model discrepancy in cm: default = 0.5
-  e$discrep[["present"]] <- 0.5
-  #
-  # Maximum ice wastage parameter value in km/a: default = 5; cannot be larger
-  VCLIF_max <- 5
-  #
-  # End of analysis options
-  # ____________________________________________________________________________
 
   # ____________________________________________________________________________
   # SETUP
@@ -109,27 +116,36 @@ main <- function(analysis_type) {
   # More settings (mainly legacy i.e. do not / cannot change)
   # ____________________________________________________________________________
 
-  # Pliocene data range: default = "low"; alternative = "high"
+  # Pliocene data range: default = "low" for projections; alternative = "high"
   # If "high" then only plots simulation data, i.e. no emulation
   if (analysis_type %in% c("MICI", "NoMICI")) pliocene_range <- "low"
   if (analysis_type == "SimHigh") pliocene_range <- "high"
 
   # Ensemble size and design
-  nbig <- 10000
-  a_type <- analysis_type
+  nbig <- ifelse(test, 500, 10000)
   expt_design_name <- NA
+  a_type <- analysis_type
   if (a_type == "MICI") expt_design_name <- "UnifLHSContBias"
   if (a_type == "NoMICI") expt_design_name <- "NoCliffContBias"
 
-  # Legacy code: calibrate with all three eras
-  calib_era <- "threeEras"  # threeEras, present, palaeo
+  # Model discrepancies for calibration
+  e$discrep <- list()
+  e$discrep[["PLIO"]] <- discrep_PLIO
+  e$discrep[["LIG"]] <- discrep_LIG
+  e$discrep[["present"]] <- discrep_present
 
   # Checks
   stopifnot(analysis_type %in% c("MICI", "NoMICI", "SimHigh"))
-  stopifnot(is.na(pliocene_range) || pliocene_range %in% c("low", "high"))
-  stopifnot(VCLIF_max <= 5)
+  stopifnot(calib_era %in% c("threeEras", "palaeo", "present"))
+  if (discrep_PLIO < 0 || discrep_LIG < 0 || discrep_present < 0) {
+    stop("Discrepancy values must be positive.")
+  }
+  if (VCLIF_max > 5) stop("VCLIF_max cannot be larger than 5.")
 
-  # WHICH PROJECTIONS TO MAKE (legacy)
+  # Should be OK as set here
+  stopifnot(is.na(pliocene_range) || pliocene_range %in% c("low", "high"))
+
+  # WHICH PROJECTIONS TO MAKE (legacy: only have 2100 data; always do all three RCPs)
   # Times; future variables to plot/emulate (RCPs x times)
   years_to_predict <- 2100
   rcp_list <- c("RCP26", "RCP45", "RCP85")
@@ -179,9 +195,18 @@ main <- function(analysis_type) {
   # Load Ritz data for main Figure 1b
   if (a_type == "NoMICI") {
 
+    # Density estimate stripped from R data file in Nature S.I.
     e$ritz_d <- revisitmici::ritz_dens
-    e$ritz_q <- revisitmici::ritz_quant
-    # Mode recalculated since Ritz et al. (2015) with narrower bandwidth (cm)
+
+    # Quantiles extracted from R data file in Nature S.I.
+    e$ritz_q <- list()
+    e$ritz_q[["q0.05"]] <- 1.97
+    e$ritz_q[["q0.25"]] <- 5.45
+    e$ritz_q[["q0.5"]] <- 11.9
+    e$ritz_q[["q0.75"]] <- 17.9
+    e$ritz_q[["q0.95"]] <- 29.6
+
+    # Mode recalculated with narrower bandwidth (cm)
     e$ritz_m <- 4.79
   }
 
@@ -370,19 +395,18 @@ main <- function(analysis_type) {
 
       op <- par(no.readonly = TRUE)
       par(
-        mar = c(1.3, 1.3, 0.3, 0.5), oma = c(1, 1.2, 0.1, 0), tcl = -0.3,
-        mgp = c(0, 0.5, 0)
+        mar = c(1.3, 1.3, 0.3, 0.5), oma = c(1, 1.2, 0.1, 0), tcl = 0.3,
+        mgp = c(0, 0.2, 0)
       )
 
+      # Variable to plot is "RCP85_2100" by default
       plot_sens_pliocene(
         dataset = sim_data, calib_data = calib_data,
-        source = "Simulated", var_future = "RCP85_2100",
-        dobias = FALSE
+        source = "Simulated", dobias = FALSE
       )
       plot_sens_pliocene(
         dataset = sim_data, calib_data = calib_data,
-        source = "Simulated", var_future = "RCP85_2100",
-        dobias = TRUE
+        source = "Simulated", dobias = TRUE
       )
       dev.off()
       par(op)
@@ -453,6 +477,7 @@ main <- function(analysis_type) {
       }
 
       # EMULATOR MEAN AND COVARIANCE FUNCTIONS
+      # Model building and validation analysis not included here (see Methods for details.)
       covtype <- "exp"
       if (myvar == "LIG") {
         trend <- "~ OCFAC + CREVLIQ + VCLIF + CREVLIQ:VCLIF"
@@ -491,10 +516,9 @@ main <- function(analysis_type) {
       cc <- cc + 4 # ready for next era
 
       # Plot variable as a function of parameters
+      # Note default variable to plot is "RCP85_2100" so need to set this if changing if statement
       if (a_type == "MICI" && myvar == "RCP85_2100") {
-        plot_params(
-          var_plot = myvar, param_list = param_list,
-          sim_inputs = sim_inputs, sim_outputs = sim_outputs,
+        plot_params(sim_inputs = sim_inputs, sim_outputs = sim_outputs,
           em_data = em_data
         )
       }
@@ -520,48 +544,52 @@ main <- function(analysis_type) {
       calib_data[[e$var_present]][1]) ** 2
       / (calib_data[[e$var_present]][2] ** 2 + e$discrep[["present"]] ** 2 +
         em_data[, paste(e$var_present, "sd", sep = "_")] ** 2)) < 3
+    calib_em[["palaeo"]] <- calib_em[["PLIO"]] & calib_em[["LIG"]]
     calib_em[["threeEras"]] <- calib_em[["PLIO"]] & calib_em[["LIG"]] &
       calib_em[["present"]]
 
     # Output ranges to files
-    cat(file = e$outfile_text,
-        "\nCalibration ranges (not including emulator variance):",
+    cat(file = e$outfile_text, sprintf("Calibration type: %s\n", calib_era),
         append = TRUE)
-    cat(file = e$outfile_text, sprintf(
-      "\nPLIO calibration: %.1f %.1f\n",
-      calib_data[["PLIO"]][1] - sqrt(calib_data[["PLIO"]][2] ** 2 +
-        e$discrep[["PLIO"]] ** 2),
-      calib_data[["PLIO"]][1] + sqrt(calib_data[["PLIO"]][2] ** 2 +
-        e$discrep[["PLIO"]] ** 2)
-    ), append = TRUE)
+    cat(file = e$outfile_text,
+        "\nCalibration ranges (not including emulator variance):\n",
+        append = TRUE)
+    if (calib_era %in% c("threeEras", "palaeo")) {
+      cat(file = e$outfile_text, sprintf(
+        "PLIO calibration: %.1f %.1f\n",
+        calib_data[["PLIO"]][1] -
+          sqrt(calib_data[["PLIO"]][2] ** 2 + e$discrep[["PLIO"]] ** 2),
+        calib_data[["PLIO"]][1] +
+          sqrt(calib_data[["PLIO"]][2] ** 2 + e$discrep[["PLIO"]] ** 2)
+      ), append = TRUE)
     cat(file = e$outfile_text, sprintf(
       "LIG calibration: %.1f %.1f\n",
-      calib_data[["LIG"]][1] - sqrt(calib_data[["LIG"]][2] ** 2 +
-        e$discrep[["LIG"]] ** 2),
-      calib_data[["LIG"]][1] + sqrt(calib_data[["LIG"]][2] ** 2 +
-        e$discrep[["LIG"]] ** 2)
+      calib_data[["LIG"]][1] -
+        sqrt(calib_data[["LIG"]][2] ** 2 + e$discrep[["LIG"]] ** 2),
+      calib_data[["LIG"]][1] +
+        sqrt(calib_data[["LIG"]][2] ** 2 + e$discrep[["LIG"]] ** 2)
     ), append = TRUE)
-    cat(file = e$outfile_text, sprintf(
-      "1992-2017 calibration (without emulator variance): %.1f %.1f\n",
-      calib_data[[e$var_present]][1] - 3 *
-        sqrt(calib_data[[e$var_present]][2] ** 2 +
-               e$discrep[[e$var_present]] ** 2),
-      calib_data[[e$var_present]][1] + 3 *
-        sqrt(calib_data[[e$var_present]][2] ** 2 +
-               e$discrep[[e$var_present]] ** 2)
-    ), append = TRUE)
-
-
+    }
+    if (calib_era %in% c("threeEras", "present")) {
+     cat(file = e$outfile_text, sprintf(
+      "1992-2017 calibration: %.1f %.1f\n",
+     calib_data[[e$var_present]][1] -
+        3 * sqrt(calib_data[[e$var_present]][2] ** 2 + e$discrep[["present"]] ** 2),
+      calib_data[[e$var_present]][1] +
+        3 * sqrt(calib_data[[e$var_present]][2] ** 2 + e$discrep[["present"]] ** 2)
+     ), append = TRUE)
+}
     # __________________________________________________________________________
     # PLOTS AND OUTPUT TEXT FILES
     # __________________________________________________________________________
 
     cat(file = e$outfile_text, "\n\nEMULATOR RESULTS\n", append = TRUE)
 
+    # Only 2100 is provided in data file, but keep this structure in case adapt to use more data later
     for (tt in years_to_predict) plot_emulated(
-      sim_data = sim_data, em_data = em_data,
-      calib_data = calib_data, calib_sim = calib_sim,
-      calib_em = calib_em, a_type = a_type, time = tt,
+      em_data = em_data, calib_data = calib_data, calib_em = calib_em,
+      sim_data = sim_data, calib_sim = calib_sim,
+      a_type = a_type, time = tt,
       calib_era = calib_era, cred_list = cred_list,
       ep_list = ep_list
     )

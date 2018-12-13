@@ -2,21 +2,24 @@
 % Please edit documentation in R/plot_params.R
 \name{plot_params}
 \alias{plot_params}
-\title{Plot RCP8.5 at 2100 versus 3 parameters.}
+\title{Plot RCP8.5 projections at 2100 versus three parameters.}
 \usage{
-plot_params(var_plot, param_list, sim_inputs, sim_outputs, em_data)
+plot_params(sim_inputs, sim_outputs, em_data, var_plot = "RCP85_2100",
+  param_list = c("VCLIF", "CREVLIQ", "OCFAC"))
 }
 \arguments{
-\item{var_plot}{Variable to plot (deprecated: only uses RCP8.5 at 2100).}
-
-\item{param_list}{List of parameters (deprecated: VCLIF, CREVLIQ, OCFAC).}
-
 \item{sim_inputs}{Simulator parameter values.}
 
 \item{sim_outputs}{Simulator variable values.}
 
 \item{em_data}{Emulator parameter and variable values.}
+
+\item{var_plot}{Variable to plot (deprecated: only RCP8.5 at 2100 is tested).}
+
+\item{param_list}{List of parameters (deprecated: only this list is tested).}
 }
 \description{
-Plot RCP8.5 at 2100 versus 3 parameters.
+For Extended Data Figure 3. In theory, this can be used to plot any emulated variables vs parameters,
+i.e. using any member of vars_to_emulate in main() (three past eras and three RCPs at 2100) as the option var_plot, but this is untested.
+Similarly, using a non-standard param_list (i.e. fewer than these 3, or "BIAS") is untested.
 }

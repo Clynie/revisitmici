@@ -2,24 +2,41 @@
 % Please edit documentation in R/plot_sens_pliocene.R
 \name{plot_sens_pliocene}
 \alias{plot_sens_pliocene}
-\title{Plot sensitivity of results to Pliocene minimum.}
+\title{Plot sensitivity of projections to Pliocene minimum value.}
 \usage{
 plot_sens_pliocene(dataset, calib_data, calib_em = NULL, source,
-  var_future, dobias = NA)
+  var_future = "RCP85_2100", dobias = NA)
 }
 \arguments{
-\item{dataset}{Dataset to use: simulated or emulated.}
+\item{dataset}{Dataset to use, whether simulated or emulated.}
 
-\item{calib_data}{Calibration data ranges.}
+\item{calib_data}{List of calibration data: c(mean, sd) for Pliocene, LIG and present.
+See main() for expected list names.}
 
-\item{calib_em}{(Optional) Calibration index for emulated ensemble.}
+\item{calib_em}{Calibration index for emulated ensemble: do not use for source = "Simulated".}
 
 \item{source}{Data type: "Simulated" or "Emulated".}
 
-\item{var_future}{(Deprecated: RCP8.5 at 2100).}
+\item{var_future}{Variable to plot vs Pliocene minimum (Deprecated: only tested for RCP8.5 at 2100).}
 
-\item{dobias}{Bias on or off (simulated only) or both (used for emulated).}
+\item{dobias}{Bias on or off (simulated only) or both (for emulated).}
 }
 \description{
-Plot sensitivity of results to Pliocene minimum.
+For Extended Data Figure 1a,b (source = "Simulated") and c (source = "Emulated").
+In theory other RCPs can be plotted, but this is untested.
+}
+\examples{
+\dontrun{
+# ED Figure 1a (simulated, bias off)
+plot_sens_pliocene(dataset = sim_data, calib_data = calib_data,
+                   source = "Simulated", dobias = FALSE)
+
+# ED Figure 1b (simulated, bias on)
+plot_sens_pliocene(dataset = sim_data, calib_data = calib_data,
+                   source = "Simulated", dobias = TRUE)
+
+# ED Figure 1c (emulated, bias all continuous values)
+plot_sens_pliocene(dataset = sim_data, calib_data = calib_data,
+                   alib_em = calib_em, source = "Emulated")
+}
 }

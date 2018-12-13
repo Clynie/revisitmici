@@ -1,0 +1,489 @@
+[1] 
+[1] ==============================================
+[1] Emulating LIG
+[1] Mean function:
+[1] ~ OCFAC + CREVLIQ + VCLIF + CREVLIQ:VCLIF
+[1] Covariance: powexp
+[1] 
+
+optimisation start
+------------------
+* estimation method   : MLE 
+* optimisation method : BFGS 
+* analytical gradient : used
+* trend model : ~OCFAC + CREVLIQ + VCLIF + CREVLIQ:VCLIF
+* covariance model : 
+  - type :  powexp 
+  - nugget : NO
+  - parameters lower bounds :  1e-10 1e-10 1e-10 1e-10 1e-10 1e-10 
+  - parameters upper bounds :  19.8 300 10 2 2 2 
+  - best initial criterion value(s) :  -64.30055 
+
+N = 6, M = 5 machine precision = 2.22045e-16
+At X0, 0 variables are exactly at the bounds
+At iterate     0  f=       64.301  |proj g|=       1.7439
+At iterate     1  f =       62.305  |proj g|=        1.4561
+At iterate     2  f =       60.503  |proj g|=       0.89935
+At iterate     3  f =       60.271  |proj g|=       0.30789
+At iterate     4  f =       60.267  |proj g|=       0.19236
+At iterate     5  f =       60.265  |proj g|=       0.20675
+At iterate     6  f =       60.257  |proj g|=       0.39986
+At iterate     7  f =        60.24  |proj g|=        0.6576
+At iterate     8  f =       60.197  |proj g|=        1.0257
+At iterate     9  f =       60.115  |proj g|=        1.2607
+At iterate    10  f =       59.955  |proj g|=        1.4385
+At iterate    11  f =       59.769  |proj g|=         1.301
+At iterate    12  f =        59.66  |proj g|=       0.57857
+At iterate    13  f =       59.654  |proj g|=        0.1608
+At iterate    14  f =       59.654  |proj g|=      0.094255
+At iterate    15  f =       59.652  |proj g|=      0.083302
+At iterate    16  f =       59.651  |proj g|=      0.096041
+At iterate    17  f =       59.645  |proj g|=       0.29059
+At iterate    18  f =       59.633  |proj g|=       0.51727
+At iterate    19  f =       59.608  |proj g|=       0.70502
+At iterate    20  f =       59.597  |proj g|=       0.43883
+At iterate    21  f =       59.593  |proj g|=       0.75821
+At iterate    22  f =       59.587  |proj g|=      0.043541
+At iterate    23  f =       59.587  |proj g|=     0.0015036
+At iterate    24  f =       59.587  |proj g|=     0.0015015
+
+iterations 24
+function evaluations 27
+segments explored during Cauchy searches 26
+BFGS updates skipped 0
+active bounds at final generalized Cauchy point 2
+norm of the final projected gradient 0.00150146
+final function value 59.5867
+
+F = 59.5867
+final  value 59.586710 
+converged
+
+Call:
+DiceKriging::km(formula = trend_formula, design = sim_inputs, 
+    response = sim_outputs, covtype = covtype)
+
+Trend  coeff.:
+                Estimate
+  (Intercept)     0.5119
+        OCFAC     0.4979
+      CREVLIQ     0.0060
+        VCLIF     0.1399
+CREVLIQ:VCLIF     0.0050
+
+Covar. type  : powexp 
+Covar. coeff.:
+                 Estimate                Estimate
+  theta(OCFAC)    19.8000     p(OCFAC)     0.7433
+theta(CREVLIQ)   166.9054   p(CREVLIQ)     0.7848
+  theta(VCLIF)    10.0000     p(VCLIF)     0.5899
+
+Variance estimate: 2.4712
+[1] 
+[1] ==============================================
+[1] Predicting LIG
+[1] 
+[1] 
+[1] ==============================================
+[1] Emulating PLIO
+[1] Mean function:
+[1] ~ OCFAC + CREVLIQ + VCLIF + CREVLIQ:VCLIF
+[1] Covariance: exp
+[1] 
+
+optimisation start
+------------------
+* estimation method   : MLE 
+* optimisation method : BFGS 
+* analytical gradient : used
+* trend model : ~OCFAC + CREVLIQ + VCLIF + CREVLIQ:VCLIF
+* covariance model : 
+  - type :  exp 
+  - nugget : NO
+  - parameters lower bounds :  1e-10 1e-10 1e-10 
+  - parameters upper bounds :  19.8 300 10 
+  - best initial criterion value(s) :  -49.53751 
+
+N = 3, M = 5 machine precision = 2.22045e-16
+At X0, 0 variables are exactly at the bounds
+At iterate     0  f=       49.538  |proj g|=       2.1279
+At iterate     1  f =       47.371  |proj g|=        0.2782
+At iterate     2  f =       47.321  |proj g|=       0.19048
+At iterate     3  f =       47.287  |proj g|=      0.071327
+At iterate     4  f =       47.282  |proj g|=      0.020443
+At iterate     5  f =       47.279  |proj g|=      0.019692
+At iterate     6  f =       47.258  |proj g|=      0.094542
+At iterate     7  f =       47.222  |proj g|=       0.15882
+At iterate     8  f =       47.166  |proj g|=       0.15631
+At iterate     9  f =       47.131  |proj g|=     0.0038114
+At iterate    10  f =       47.131  |proj g|=     0.0016183
+At iterate    11  f =       47.131  |proj g|=    0.00010782
+At iterate    12  f =       47.131  |proj g|=    4.3206e-05
+
+iterations 12
+function evaluations 14
+segments explored during Cauchy searches 13
+BFGS updates skipped 0
+active bounds at final generalized Cauchy point 1
+norm of the final projected gradient 4.32059e-05
+final function value 47.1307
+
+F = 47.1307
+final  value 47.130748 
+converged
+
+Call:
+DiceKriging::km(formula = trend_formula, design = sim_inputs, 
+    response = sim_outputs, covtype = covtype)
+
+Trend  coeff.:
+                Estimate
+  (Intercept)     3.9379
+        OCFAC     0.1532
+      CREVLIQ     0.0083
+        VCLIF     0.2430
+CREVLIQ:VCLIF     0.0084
+
+Covar. type  : exp 
+Covar. coeff.:
+                 Estimate
+  theta(OCFAC)    19.8000
+theta(CREVLIQ)    96.6512
+  theta(VCLIF)     4.3811
+
+Variance estimate: 1.967909
+[1] 
+[1] ==============================================
+[1] Predicting PLIO
+[1] 
+[1] 
+[1] ==============================================
+[1] Emulating RCP45_pres
+[1] Mean function:
+[1] ~ OCFAC + CREVLIQ +\n      VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + CREVLIQ:VCLIF
+[1] Covariance: matern3_2
+[1] 
+
+optimisation start
+------------------
+* estimation method   : MLE 
+* optimisation method : BFGS 
+* analytical gradient : used
+* trend model : ~OCFAC + CREVLIQ + VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + 
+    CREVLIQ:VCLIF
+* covariance model : 
+  - type :  matern3_2 
+  - nugget : NO
+  - parameters lower bounds :  1e-10 1e-10 1e-10 1e-10 
+  - parameters upper bounds :  19.8 300 10 2 
+  - best initial criterion value(s) :  19.69135 
+
+N = 4, M = 5 machine precision = 2.22045e-16
+At X0, 0 variables are exactly at the bounds
+At iterate     0  f=      -19.691  |proj g|=       6.0482
+At iterate     1  f =      -25.409  |proj g|=        5.2157
+At iterate     2  f =      -30.415  |proj g|=       0.53823
+At iterate     3  f =       -30.53  |proj g|=        1.7276
+At iterate     4  f =       -30.77  |proj g|=        1.6122
+At iterate     5  f =      -30.818  |proj g|=        1.5738
+At iterate     6  f =      -30.896  |proj g|=        1.5186
+At iterate     7  f =       -31.01  |proj g|=       0.80392
+At iterate     8  f =      -31.116  |proj g|=       0.50595
+At iterate     9  f =      -31.129  |proj g|=       0.24299
+At iterate    10  f =       -31.14  |proj g|=       0.20309
+At iterate    11  f =      -31.189  |proj g|=       0.46135
+At iterate    12  f =      -31.309  |proj g|=        1.0666
+At iterate    13  f =      -31.607  |proj g|=        1.5675
+At iterate    14  f =        -33.4  |proj g|=        1.3746
+ys=-4.469e-01  -gs= 1.530e+00, BFGS update SKIPPED
+At iterate    15  f =       -33.58  |proj g|=        1.0676
+At iterate    16  f =      -35.351  |proj g|=         1.698
+At iterate    17  f =      -36.728  |proj g|=        1.2206
+At iterate    18  f =       -37.51  |proj g|=        0.7701
+At iterate    19  f =      -37.568  |proj g|=       0.17188
+At iterate    20  f =      -37.585  |proj g|=      0.010912
+At iterate    21  f =      -37.585  |proj g|=     0.0064433
+At iterate    22  f =      -37.585  |proj g|=    3.4593e-05
+At iterate    23  f =      -37.585  |proj g|=    6.3903e-07
+
+iterations 23
+function evaluations 31
+segments explored during Cauchy searches 26
+BFGS updates skipped 1
+active bounds at final generalized Cauchy point 1
+norm of the final projected gradient 6.3903e-07
+final function value -37.5851
+
+F = -37.5851
+final  value -37.585133 
+converged
+
+Call:
+DiceKriging::km(formula = trend_formula, design = sim_inputs, 
+    response = sim_outputs, covtype = covtype)
+
+Trend  coeff.:
+                Estimate
+  (Intercept)    -4.6572
+        OCFAC     0.4014
+      CREVLIQ     0.0001
+        VCLIF    -0.0056
+         BIAS    -0.2212
+  OCFAC:VCLIF     0.0402
+   OCFAC:BIAS     0.5254
+CREVLIQ:VCLIF     0.0032
+
+Covar. type  : matern3_2 
+Covar. coeff.:
+                 Estimate
+  theta(OCFAC)     3.8279
+theta(CREVLIQ)    85.8992
+  theta(VCLIF)     2.4836
+   theta(BIAS)     0.0000
+
+Variance estimate: 0.2397796
+[1] 
+[1] ==============================================
+[1] Predicting RCP45_pres
+[1] 
+[1] 
+[1] ==============================================
+[1] Emulating RCP26_2100
+[1] Mean function:
+[1] ~ OCFAC + CREVLIQ +\n      VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + CREVLIQ:VCLIF + VCLIF:BIAS +\n      OCFAC:VCLIF:BIAS
+[1] Covariance: exp
+[1] 
+
+optimisation start
+------------------
+* estimation method   : MLE 
+* optimisation method : BFGS 
+* analytical gradient : used
+* trend model : ~OCFAC + CREVLIQ + VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + 
+    CREVLIQ:VCLIF + VCLIF:BIAS + OCFAC:VCLIF:BIAS
+* covariance model : 
+  - type :  exp 
+  - nugget : NO
+  - parameters lower bounds :  1e-10 1e-10 1e-10 1e-10 
+  - parameters upper bounds :  19.8 300 10 2 
+  - best initial criterion value(s) :  -308.5351 
+
+N = 4, M = 5 machine precision = 2.22045e-16
+At X0, 0 variables are exactly at the bounds
+At iterate     0  f=       308.54  |proj g|=       1.9286
+At iterate     1  f =       304.83  |proj g|=        1.2842
+At iterate     2  f =       304.51  |proj g|=        1.0303
+At iterate     3  f =       303.79  |proj g|=       0.48321
+At iterate     4  f =       303.54  |proj g|=        1.1517
+At iterate     5  f =       303.33  |proj g|=        0.3642
+At iterate     6  f =        303.3  |proj g|=       0.10304
+At iterate     7  f =        303.3  |proj g|=      0.031968
+At iterate     8  f =        303.3  |proj g|=      0.031964
+At iterate     9  f =       303.29  |proj g|=      0.078509
+At iterate    10  f =       303.28  |proj g|=       0.15945
+At iterate    11  f =       303.25  |proj g|=       0.28085
+At iterate    12  f =       303.18  |proj g|=       0.53256
+At iterate    13  f =       303.06  |proj g|=       0.62116
+At iterate    14  f =       302.87  |proj g|=       0.89055
+At iterate    15  f =       302.62  |proj g|=       0.69136
+At iterate    16  f =       302.53  |proj g|=       0.31589
+At iterate    17  f =       302.52  |proj g|=       0.05369
+At iterate    18  f =       302.52  |proj g|=     0.0034308
+At iterate    19  f =       302.52  |proj g|=     0.0003498
+At iterate    20  f =       302.52  |proj g|=    0.00041827
+
+iterations 20
+function evaluations 23
+segments explored during Cauchy searches 24
+BFGS updates skipped 0
+active bounds at final generalized Cauchy point 1
+norm of the final projected gradient 0.000418269
+final function value 302.52
+
+F = 302.52
+final  value 302.519820 
+converged
+
+Call:
+DiceKriging::km(formula = trend_formula, design = sim_inputs, 
+    response = sim_outputs, covtype = covtype)
+
+Trend  coeff.:
+                   Estimate
+     (Intercept)   -27.0788
+           OCFAC     2.2849
+         CREVLIQ     0.0061
+           VCLIF     0.4616
+            BIAS    -0.3849
+     OCFAC:VCLIF     0.2540
+      OCFAC:BIAS     2.5442
+   CREVLIQ:VCLIF     0.0687
+      VCLIF:BIAS    -0.0026
+OCFAC:VCLIF:BIAS     0.6021
+
+Covar. type  : exp 
+Covar. coeff.:
+                 Estimate
+  theta(OCFAC)    19.8000
+theta(CREVLIQ)    91.8818
+  theta(VCLIF)     2.2358
+   theta(BIAS)     1.5414
+
+Variance estimate: 44.01963
+[1] 
+[1] ==============================================
+[1] Predicting RCP26_2100
+[1] 
+[1] 
+[1] ==============================================
+[1] Emulating RCP45_2100
+[1] Mean function:
+[1] ~ OCFAC + CREVLIQ +\n      VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + CREVLIQ:VCLIF
+[1] Covariance: exp
+[1] 
+
+optimisation start
+------------------
+* estimation method   : MLE 
+* optimisation method : BFGS 
+* analytical gradient : used
+* trend model : ~OCFAC + CREVLIQ + VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + 
+    CREVLIQ:VCLIF
+* covariance model : 
+  - type :  exp 
+  - nugget : NO
+  - parameters lower bounds :  1e-10 1e-10 1e-10 1e-10 
+  - parameters upper bounds :  19.8 300 10 2 
+  - best initial criterion value(s) :  -376.2823 
+
+N = 4, M = 5 machine precision = 2.22045e-16
+At X0, 0 variables are exactly at the bounds
+At iterate     0  f=       376.28  |proj g|=       4.2291
+At iterate     1  f =       360.34  |proj g|=        1.3095
+At iterate     2  f =       358.52  |proj g|=          1.11
+At iterate     3  f =       356.14  |proj g|=       0.80038
+At iterate     4  f =       355.44  |proj g|=      0.023884
+At iterate     5  f =       355.28  |proj g|=       0.01449
+At iterate     6  f =       355.22  |proj g|=     0.0060607
+At iterate     7  f =       355.21  |proj g|=    0.00091808
+At iterate     8  f =       355.21  |proj g|=    4.8564e-05
+At iterate     9  f =       355.21  |proj g|=    4.1829e-07
+
+iterations 9
+function evaluations 14
+segments explored during Cauchy searches 12
+BFGS updates skipped 0
+active bounds at final generalized Cauchy point 3
+norm of the final projected gradient 4.18286e-07
+final function value 355.213
+
+F = 355.213
+final  value 355.212846 
+converged
+
+Call:
+DiceKriging::km(formula = trend_formula, design = sim_inputs, 
+    response = sim_outputs, covtype = covtype)
+
+Trend  coeff.:
+                Estimate
+  (Intercept)   -25.6921
+        OCFAC     1.8299
+      CREVLIQ     0.0298
+        VCLIF     0.3457
+         BIAS     0.2046
+  OCFAC:VCLIF     0.8051
+   OCFAC:BIAS     4.1755
+CREVLIQ:VCLIF     0.1401
+
+Covar. type  : exp 
+Covar. coeff.:
+                 Estimate
+  theta(OCFAC)    19.8000
+theta(CREVLIQ)   104.5347
+  theta(VCLIF)    10.0000
+   theta(BIAS)     2.0000
+
+Variance estimate: 242.8179
+[1] 
+[1] ==============================================
+[1] Predicting RCP45_2100
+[1] 
+[1] 
+[1] ==============================================
+[1] Emulating RCP85_2100
+[1] Mean function:
+[1] ~ OCFAC + CREVLIQ +\n      VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + CREVLIQ:VCLIF
+[1] Covariance: exp
+[1] 
+
+optimisation start
+------------------
+* estimation method   : MLE 
+* optimisation method : BFGS 
+* analytical gradient : used
+* trend model : ~OCFAC + CREVLIQ + VCLIF + BIAS + OCFAC:VCLIF + OCFAC:BIAS + 
+    CREVLIQ:VCLIF
+* covariance model : 
+  - type :  exp 
+  - nugget : NO
+  - parameters lower bounds :  1e-10 1e-10 1e-10 1e-10 
+  - parameters upper bounds :  19.8 300 10 2 
+  - best initial criterion value(s) :  -408.9554 
+
+N = 4, M = 5 machine precision = 2.22045e-16
+At X0, 0 variables are exactly at the bounds
+At iterate     0  f=       408.96  |proj g|=       2.7687
+At iterate     1  f =       393.39  |proj g|=        1.9886
+At iterate     2  f =       388.18  |proj g|=       0.12158
+At iterate     3  f =       388.13  |proj g|=        0.1216
+At iterate     4  f =       378.65  |proj g|=      0.047338
+At iterate     5  f =       378.53  |proj g|=      0.025949
+Nonpositive definiteness in Cholesky factorization in formk;
+   refresh the lbfgs memory and restart the iteration.
+At iterate     6  f =       378.51  |proj g|=      0.022065
+At iterate     7  f =       378.48  |proj g|=     0.0020762
+At iterate     8  f =       378.48  |proj g|=    0.00014228
+At iterate     9  f =       378.48  |proj g|=    8.1778e-07
+At iterate    10  f =       378.48  |proj g|=    3.2543e-10
+
+iterations 10
+function evaluations 16
+segments explored during Cauchy searches 15
+BFGS updates skipped 0
+active bounds at final generalized Cauchy point 3
+norm of the final projected gradient 3.25434e-10
+final function value 378.482
+
+F = 378.482
+final  value 378.481760 
+converged
+
+Call:
+DiceKriging::km(formula = trend_formula, design = sim_inputs, 
+    response = sim_outputs, covtype = covtype)
+
+Trend  coeff.:
+                Estimate
+  (Intercept)   -14.6900
+        OCFAC     1.8947
+      CREVLIQ     0.0722
+        VCLIF     4.3253
+         BIAS     0.0118
+  OCFAC:VCLIF     0.7146
+   OCFAC:BIAS     4.3622
+CREVLIQ:VCLIF     0.1933
+
+Covar. type  : exp 
+Covar. coeff.:
+                 Estimate
+  theta(OCFAC)    19.8000
+theta(CREVLIQ)    42.6916
+  theta(VCLIF)    10.0000
+   theta(BIAS)     2.0000
+
+Variance estimate: 261.9237
+[1] 
+[1] ==============================================
+[1] Predicting RCP85_2100
+[1] 

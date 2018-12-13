@@ -1,13 +1,30 @@
 plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
-                               var_future, dobias = NA) {
-  #' Plot sensitivity of results to Pliocene minimum.
+                               var_future = "RCP85_2100", dobias = NA) {
+  #' Plot sensitivity of projections to Pliocene minimum value.
   #'
-  #' @param dataset Dataset to use: simulated or emulated.
-  #' @param calib_data Calibration data ranges.
-  #' @param calib_em (Optional) Calibration index for emulated ensemble.
+  #' For Extended Data Figure 1a,b (source = "Simulated") and c (source = "Emulated").
+  #' In theory other RCPs can be plotted, but this is untested.
+  #' @param dataset Dataset to use, whether simulated or emulated.
+  #' @param calib_data List of calibration data: c(mean, sd) for Pliocene, LIG and present.
+  #' See main() for expected list names.
+  #' @param calib_em Calibration index for emulated ensemble: do not use for source = "Simulated".
   #' @param source Data type: "Simulated" or "Emulated".
-  #' @param var_future (Deprecated: RCP8.5 at 2100).
-  #' @param dobias Bias on or off (simulated only) or both (used for emulated).
+  #' @param var_future Variable to plot vs Pliocene minimum (Deprecated: only tested for RCP8.5 at 2100).
+  #' @param dobias Bias on or off (simulated only) or both (for emulated).
+  #' @examples
+  #' \dontrun{
+  #' # ED Figure 1a (simulated, bias off)
+  #' plot_sens_pliocene(dataset = sim_data, calib_data = calib_data,
+  #'                    source = "Simulated", dobias = FALSE)
+  #'
+  #' # ED Figure 1b (simulated, bias on)
+  #' plot_sens_pliocene(dataset = sim_data, calib_data = calib_data,
+  #'                    source = "Simulated", dobias = TRUE)
+  #'
+  #' # ED Figure 1c (emulated, bias all continuous values)
+  #' plot_sens_pliocene(dataset = sim_data, calib_data = calib_data,
+  #'                    alib_em = calib_em, source = "Emulated")
+  #' }
 
   # ____________________________________________________________________________
   # PLOT SENSITIVITY OF RESULTS TO PLIOCENE LOWER BOUND
@@ -20,6 +37,7 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
 
   # Pass args to relevant names
   if (source == "Simulated") {
+    if (!is.null(calib_em)) warning("Do not provide calib_em for simulated dataset option")
     sim_data <- dataset
   }
   if (source == "Emulated") {
@@ -118,8 +136,8 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
       calib_plio_down <- em_data[, "PLIO"] > plio_obs - tot_err_down
       calib_plio_up <- em_data[, "PLIO"] < calib_data[["PLIO"]][1] + tot_err_up
 
-      # Calibration of emulated with both LIG and current Pliocene range is here
-      em_plio_post <- em_data[calib_em[["LIG"]] &
+      # Calibration of emulated with present, LIG and current Pliocene range is here
+      em_plio_post <- em_data[calib_em[["present"]] & calib_em[["LIG"]] &
                               calib_plio_up & calib_plio_down, var_future]
 
     }
@@ -145,14 +163,24 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
   # EXTENDED DATA FIGURE 1a, b
   # RCP8.5 at 2100 mean and s.d. vs PLIO minimum
   # ____________________________________________________________________________
+
   if (source == "Simulated") {
     plot(pliocene_minima[!is.na(sim_plio_mean)],
       sim_plio_mean[!is.na(sim_plio_mean)],
-      type = "l", col = e$cols_rcp_dark[[myrcp]], lwd = 2, xlab = "",
+      type = "l", col = e$cols_rcp_dark[[myrcp]], lwd = 2,
+      axes = FALSE, frame.plot = TRUE, xlab = "", ylab = "",
       ylim = range(e$var_breaks[[var_future]]), yaxs = "i",
-      xlim = range(pliocene_minima), xaxs = "i", ylab = "", main = "",
-      cex.axis = size_axis_fig2, cex.lab = size_lab_fig2
-    )
+      xlim = range(pliocene_minima), xaxs = "i", main = ""
+      )
+
+    # Y axes
+    ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 50)
+    minor_ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 10)
+    axis(side = 2, at = ticks_y, labels = ticks_y,
+         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    axis(side = 2, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
+    axis(side = 4, at = ticks_y, labels = FALSE)
+    axis(side = 4, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
     if (bias_name == "off") {
       mtext(paste(
         "Mean and std dev SLE for",
@@ -161,11 +189,17 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
       side = 2, line = 1.2, cex = size_lab_fig2
       )
     }
+
+    # X axis
+    ticks_x <- seq(min(pliocene_minima), max(pliocene_minima))
+    minor_ticks_x <- seq(min(pliocene_minima), max(pliocene_minima), by = 0.2)
+    axis(side = 1, at = ticks_x, labels = ticks_x,
+         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    axis(side = 1, at = minor_ticks_x, labels = FALSE, tcl = 0.1)
     mtext("Lower bound Pliocene (m SLE)",
       side = 1, line = 1.1,
       cex = size_lab_fig2
     )
-    Hmisc::minor.tick(nx = 4, ny = 5)
 
     polygon(c(
       pliocene_minima[!is.na(sim_plio_mean)],
@@ -189,14 +223,8 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
         sim_plio_sd[!is.na(sim_plio_mean)],
       lty = 3, col = e$cols_rcp_dark[[myrcp]]
     )
-    abline(v = 5, lty = 5, col = "darkgrey")
-    abline(v = 10, lty = 5, col = "darkgrey")
     if (bias_name == "off") sublabel <- "a"
     if (bias_name == "on") sublabel <- "b"
-    text(0, 0.95 * max(e$var_breaks[[var_future]]), sublabel,
-      font = 2,
-      cex = 0.7, pos = 4
-    )
   }
 
   # ____________________________________________________________________________
@@ -208,19 +236,32 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
 
     plot(pliocene_minima, em_plio_quantiles[["0.5"]],
       type = "l", col = e$cols_rcp_dark[[myrcp]], lwd = 2,
-      xlab = "'", ylab = "", main = "",
+      xlab = "", ylab = "", main = "", axes = FALSE, frame.plot = TRUE,
       ylim = range(e$var_breaks[[var_future]]), yaxs = "i",
-      xlim = range(pliocene_minima), xaxs = "i",
-      cex.axis = size_axis_fig2, cex.lab = size_lab_fig2
+      xlim = range(pliocene_minima), xaxs = "i"
     )
+
+    # Y axes
+    ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 50)
+    minor_ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 10)
+    axis(side = 2, at = ticks_y, labels = ticks_y,
+         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    axis(side = 2, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
+    axis(side = 4, at = ticks_y, labels = FALSE)
+    axis(side = 4, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
     mtext(paste("Mode and quantiles SLE for", e$var_labels[[var_future]]),
       side = 2, line = 1.2, cex = size_lab_fig2
     )
+
+    # X axis
+    ticks_x <- seq(min(pliocene_minima), max(pliocene_minima))
+    minor_ticks_x <- seq(min(pliocene_minima), max(pliocene_minima), by = 0.2)
+    axis(side = 1, at = ticks_x, labels = ticks_x,
+         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    axis(side = 1, at = minor_ticks_x, labels = FALSE, tcl = 0.1)
     mtext("Lower bound Pliocene (m SLE)",
-      side = 1, line = 1.1,
-      cex = size_lab_fig2
+      side = 1, line = 1.1, cex = size_lab_fig2
     )
-    Hmisc::minor.tick(nx = 4, ny = 5)
 
     polygon(c(pliocene_minima, rev(pliocene_minima)),
       c(em_plio_quantiles[["0.95"]], rev(em_plio_quantiles[["0.05"]])),
@@ -231,12 +272,14 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
       col = e$cols_rcp_light[[myrcp]], border = e$cols_rcp_dark[[myrcp]]
     )
     points(pliocene_minima, em_plio_mode, pch = "*", cex = 0.8)
-    abline(v = 5.0, lty = 5, col = "darkgrey")
-    abline(v = 10.0, lty = 5, col = "darkgrey")
-    text(0, 0.95 * max(e$var_breaks[[var_future]]), "c",
-      font = 2,
-      cex = 0.7, pos = 4
-    )
-
+    sublabel <- "c"
   }
+
+  # Additions to either kind of plot
+  abline(v = 5.0, lwd = 0.5, col = "darkgrey")
+  abline(v = 10.0, lwd = 0.5, col = "darkgrey")
+  text(0, 0.95 * max(e$var_breaks[[var_future]]), sublabel,
+       font = 2, cex = 0.7, pos = 4
+  )
+
 }

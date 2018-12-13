@@ -2,16 +2,59 @@
 % Please edit documentation in R/main.R
 \name{main}
 \alias{main}
-\title{Main steering function.}
+\title{Run revisitmici analysis.}
 \usage{
-main(analysis_type)
+main(analysis_type, test = FALSE, calib_era = "threeEras",
+  discrep_PLIO = 5, discrep_LIG = 2, discrep_present = 0.5,
+  VCLIF_max = 5)
 }
 \arguments{
-\item{analysis_type}{Analysis type: MICI, NoMICI or SimHigh.}
+\item{analysis_type}{Analysis type. Options: "MICI", "NoMICI" or "SimHigh".}
+
+\item{test}{If TRUE, sets emulator ensemble size to N = 500 instead of 10,000.}
+
+\item{calib_era}{Which eras to calibrate with. Default = "threeEras" (Pliocene, Last interglacial
+and 1992-2017). Other options = "palaeo" (Pliocene and LIG only), "present" (1992-2017 only).}
+
+\item{discrep_PLIO}{Pliocene model discrepancy in metres. Default = 5.
+Set to 0 or 10 for sensitivity analyses in ED Figure 5.}
+
+\item{discrep_LIG}{Last Interglacial model discrepancy in metres. Default = 2. Set to 0 or 4 for sensitivity analyses in ED Figure 5.}
+
+\item{discrep_present}{1992-2017 model discrepancy in cm. Default = 0.5.
+Set to 0 or 1 for sensitivity analyses in ED Figure 5.}
+
+\item{VCLIF_max}{Maximum ice wastage parameter value in km per year. Default = 5 and cannot be larger.
+Sensitivity analysis in ED Figure 5 uses 4 km/a.}
 }
 \description{
-This is a test paragraph.
+This is the main steering function to run the analysis for "Revisiting Antarctic ice loss due to marine ice
+cliff instability", producing figures and numerical output for Antarctic projections at 2100.
+All results for figures and tables can be generated except timeseries projections (Figures 2, 3)
+and emulator validation (Figure 6). Results are given for Figure 4 and ED Figure 5, but the manuscript figures are not plotted.
 }
 \details{
-These are the details.
+All argument combinations to reproduce results are given in "Examples" below. N.B. Currently does not check
+if any calibration arguments are provided but unused in analysis type: will just ignore them.
+}
+\examples{
+\dontrun{
+# Main projections:
+main("MICI") # Figure 1a; ED Figures 1, 2a,b, 3, 4a, 7
+main("No MICI") # Figure 1b; ED Figure 4c
+main("SimHigh") # ED Figure 2b,c
+
+# Sensitivity tests for ED Figure 5:
+main("MICI", calib_era = "palaeo")
+main("MICI", calib_era = "present")
+main("MICI", discrep_PLIO = 10, discrep_LIG = 4, discrep_present = 1)
+main("MICI", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+main("MICI", calib_era = "palaeo", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+main("MICI", VCLIF_max = 4)
+main("NoMICI", calib_era = "palaeo")
+main("NoMICI", calib_era = "present")
+main("NoMICI", discrep_PLIO = 10, discrep_LIG = 4, discrep_present = 1)
+main("NoMICI", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+main("NoMICI", calib_era = "palaeo", discrep_PLIO = 0, discrep_LIG = 0, discrep_present = 0)
+}
 }

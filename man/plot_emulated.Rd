@@ -2,33 +2,36 @@
 % Please edit documentation in R/plot_emulated.R
 \name{plot_emulated}
 \alias{plot_emulated}
-\title{Plot and write out emulator results.}
+\title{Emulator results.}
 \usage{
-plot_emulated(sim_data, em_data, calib_data, calib_sim, calib_em, a_type,
+plot_emulated(em_data, calib_data, calib_em, sim_data, calib_sim, a_type,
   time, calib_era, cred_list, ep_list)
 }
 \arguments{
-\item{sim_data}{Simulation data for plots.}
+\item{em_data}{Emulation ensemble data.}
 
-\item{em_data}{Emulation data.}
+\item{calib_data}{List of calibration data ranges: c(mean, sd) for Pliocene, LIG and present.
+See main() for expected list names.}
 
-\item{calib_data}{Calibration data ranges.}
+\item{calib_em}{Calibration index for emulator ensemble (i.e. FALSE for each ruled out ensemble member).}
 
-\item{calib_sim}{Calibration index for simulator ensemble.}
+\item{sim_data}{Simulation data to add to plots.}
 
-\item{calib_em}{Calibration index for emulator ensemble.}
+\item{calib_sim}{Calibration index for simulator ensemble (i.e. FALSE for each ruled out ensemble member).}
 
-\item{a_type}{Analysis type: MICI or NoMICI.}
+\item{a_type}{Analysis type: "MICI" or "NoMICI".}
 
-\item{time}{Year of projections (deprecated: only 2100 in data).}
+\item{time}{Year of projections (deprecated: only 2100 in data file).}
 
-\item{calib_era}{Which era(s) to use for calibration (deprecated:
-only threeEras is tested).}
+\item{calib_era}{Which era(s) to use for calibration. Options: "threeEras", "palaeo" or "present".}
 
 \item{cred_list}{List of credibility thresholds for data file.}
 
 \item{ep_list}{List of exceedance probability thresholds for data file.}
 }
 \description{
-Plot and write out emulator results.
+For Figure 1 and ED Figures 1c (via plot_sens_pliocene()), 3, 4 and 7,
+results for Figure 4 and ED Figure 5, and Table 2.
+Plot and write out all emulator prediction results. Only time = 2100 is in data file
+provided, but code could be adapted if needed.
 }

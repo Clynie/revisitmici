@@ -1,15 +1,21 @@
-plot_emulated <- function(sim_data, em_data, calib_data, calib_sim, calib_em,
+plot_emulated <- function(em_data, calib_data, calib_em, sim_data, calib_sim,
                           a_type, time, calib_era, cred_list, ep_list) {
-  #' Plot and write out emulator results.
-  #' @param sim_data Simulation data for plots.
-  #' @param em_data Emulation data.
-  #' @param calib_data Calibration data ranges.
-  #' @param calib_sim Calibration index for simulator ensemble.
-  #' @param calib_em Calibration index for emulator ensemble.
-  #' @param a_type Analysis type: MICI or NoMICI.
-  #' @param time Year of projections (deprecated: only 2100 in data).
-  #' @param calib_era Which era(s) to use for calibration (deprecated:
-  #' only threeEras is tested).
+  #' Emulator results.
+  #'
+  #' For Figure 1 and ED Figures 1c (via plot_sens_pliocene()), 3, 4 and 7,
+  #' results for Figure 4 and ED Figure 5, and Table 2.
+  #' Plot and write out all emulator prediction results. Only time = 2100 is in data file
+  #' provided, but code could be adapted if needed.
+  #'
+  #' @param em_data Emulation ensemble data.
+  #' @param calib_data List of calibration data ranges: c(mean, sd) for Pliocene, LIG and present.
+  #' See main() for expected list names.
+  #' @param calib_em Calibration index for emulator ensemble (i.e. FALSE for each ruled out ensemble member).
+  #' @param sim_data Simulation data to add to plots.
+  #' @param calib_sim Calibration index for simulator ensemble (i.e. FALSE for each ruled out ensemble member).
+  #' @param a_type Analysis type: "MICI" or "NoMICI".
+  #' @param time Year of projections (deprecated: only 2100 in data file).
+  #' @param calib_era Which era(s) to use for calibration. Options: "threeEras", "palaeo" or "present".
   #' @param cred_list List of credibility thresholds for data file.
   #' @param ep_list List of exceedance probability thresholds for data file.
 
@@ -338,12 +344,13 @@ plot_emulated <- function(sim_data, em_data, calib_data, calib_sim, calib_em,
       op <- par(no.readonly = TRUE)
       par(
         mar = c(1.3, 1.3, 0.3, 0.5), oma = c(1, 1.2, 0.1, 0),
-        tcl = -0.3, mgp = c(0, 0.5, 0)
+        tcl = 0.3, mgp = c(0, 0.2, 0)
       )
 
+      # Function plots RCP85_2100 by default, so need to set var_future arg if changing if myvar statement above
       plot_sens_pliocene(
         dataset = em_data, calib_data = calib_data, calib_em = calib_em,
-        source = "Emulated", var_future = myvar
+        source = "Emulated"
         )
 
       dev.off()

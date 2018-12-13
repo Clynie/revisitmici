@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_simulated.R
 \name{plot_simulated}
 \alias{plot_simulated}
-\title{Plot DeConto and Pollard (2016) simulator data.}
+\title{Plot DeConto and Pollard data.}
 \usage{
 plot_simulated(sim_data, calib_sim, pliocene_range, chebyshev)
 }
@@ -17,5 +17,5 @@ plot_simulated(sim_data, calib_sim, pliocene_range, chebyshev)
 to text file.}
 }
 \description{
-Plot DeConto and Pollard (2016) simulator data.
+For Figure 2 and Table 1.
 }

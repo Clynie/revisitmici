@@ -1,7 +1,14 @@
+#___________________________________________________________________________
 # Legacy code: used to get RData file from SI of Ritz et al. (2015) Nature
 # and strip out 2100 values for data/ file in this package
 # Saved here for reproducibility
-# New RData file is now called data/ritz_2100.RData
+#
+# RData file is now called data/ritz_dens.RData and only contains densities
+# (resaved with save(ritz_dens, file = "ritz_dens_2100.rdata") and renamed)
+#
+# Quantiles are now hard-coded instead
+#___________________________________________________________________________
+
 #if (!exists("ritz_dens")) {
 
 #  print("Downloading Ritz data file from Nature...")

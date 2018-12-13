@@ -1,0 +1,68 @@
+OUTPUT
+
+Analysis type: NoMICI
+PLIO data range: 5.0 15.0
+LIG data range: 3.5 7.4
+1992-2017 range (±3 sigma): -0.4 1.9
+PLIO model discrep: 10.0
+LIG model discrep: 4.0
+Present day model discrep: 1.0
+
+
+ENSEMBLE CALIBRATION INFORMATION
+
+Ensemble Design: NoCliffContBias
+Calibration type: threeEras
+
+Calibration ranges (not including emulator variance):
+PLIO calibration: -1.2 21.2
+LIG calibration: 1.0 9.9
+1992-2017 calibration: -2.5 4.0
+
+
+EMULATOR RESULTS
+
+========================================
+RCP26_2100
+========================================
+
+CALIBRATED EMULATOR ESTIMATES (N = 6976)
+
+Mode: -8 cm
+Median: -4 cm
+Mean: -3 cm
+68% range: [-12, 7] cm
+90% range: [-14, 13] cm
+Probability of exceeding 30 cm = 0%
+Probability of exceeding 50 cm = 0%
+Probability of exceeding 100 cm = 0%
+
+========================================
+RCP45_2100
+========================================
+
+CALIBRATED EMULATOR ESTIMATES (N = 6976)
+
+Mode: -4 cm
+Median: 2 cm
+Mean: 3 cm
+68% range: [-6, 14] cm
+90% range: [-9, 21] cm
+Probability of exceeding 30 cm = 0%
+Probability of exceeding 50 cm = 0%
+Probability of exceeding 100 cm = 0%
+
+========================================
+RCP85_2100
+========================================
+
+CALIBRATED EMULATOR ESTIMATES (N = 6976)
+
+Mode: 9 cm
+Median: 17 cm
+Mean: 18 cm
+68% range: [7, 30] cm
+90% range: [4, 39] cm
+Probability of exceeding 30 cm = 16%
+Probability of exceeding 50 cm = 0%
+Probability of exceeding 100 cm = 0%

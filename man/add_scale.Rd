@@ -2,25 +2,23 @@
 % Please edit documentation in R/main.R
 \name{add_scale}
 \alias{add_scale}
-\title{Add colour scale to figure.}
+\title{Colour scale.}
 \usage{
 add_scale(legbreaks, leglabels, col, xlim, ylim, cex = par("cex"))
 }
 \arguments{
-\item{legbreaks}{Legend breaks.}
+\item{legbreaks}{Set of legend breaks.}
 
-\item{leglabels}{Legend labels.}
+\item{leglabels}{Set of legend labels.}
 
-\item{col}{Colours.}
+\item{col}{Set of colours.}
 
-\item{xlim}{X range.}
+\item{xlim}{X min, max for placement.}
 
-\item{ylim}{Y range.}
+\item{ylim}{Y min, max for placement.}
 
-\item{cex}{Text size (optional).
-add_scale(breaks_SLE, sprintf("%.1f", breaks_SLE), colrng_SLE,
-xlim = c(9, 9.5), ylim = c(4, 8), cex = 0.7)}
+\item{cex}{Text size (optional).}
 }
 \description{
-Add colour scale to figure.
+Add colour scale to a figure. Adapted from code by Jonty Rougier.
 }

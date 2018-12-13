@@ -1,6 +1,7 @@
 plot_simulated <- function(sim_data, calib_sim, pliocene_range, chebyshev) {
-  #' Plot DeConto and Pollard (2016) simulator data.
+  #' Plot DeConto and Pollard data.
   #'
+  #' For Figure 2 and Table 1.
   #' @param sim_data Simulation dataset.
   #' @param calib_sim Calibration index for simulator ensemble.
   #' @param pliocene_range Name of Pliocene range (used for plot details).
