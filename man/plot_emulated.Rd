@@ -31,7 +31,7 @@ See main() for expected list names.}
 }
 \description{
 For Figure 1 and ED Figures 1c (via plot_sens_pliocene()), 3, 4 and 7,
-results for Figure 4 and ED Figure 5, and Table 2.
-Plot and write out all emulator prediction results. Only time = 2100 is in data file
-provided, but code could be adapted if needed.
+results for Figure 4 and ED Figure 5, and Table 2. Plot and write out all emulator
+prediction results. Only time = 2100 is in data file provided, but code could be adapted
+if needed. Uses RColorBrewer package for ED Figure 4 colours and Hmisc package for minor.tick().
 }

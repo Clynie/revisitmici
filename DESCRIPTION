@@ -1,16 +1,14 @@
 Package: revisitmici
 Type: Package
 Title: Analysis code for Edwards et al. (2019) Nature, "Revisiting Antarctic ice loss due to marine ice cliff instability"
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: person("Tamsin", "Edwards", email = "tamsin.edwards@kcl.ac.uk",
   role = c("aut", "cre"))
 Maintainer: Tamsin L. Edwards <tamsin.edwards@kcl.ac.uk>
-Description: This code reproduces the main results from Edwards et al. (2019) 
-    Nature: the projections at 2100 for MICI and NoMICI, and the simulator plots 
-    using the high Pliocene calibration. It is also possible to run the 
-    sensitivity tests for discrepancy (zero and double) and VCLIF 4 km/a by
-    editing main.R. The only aspects not included are non-2100 results and 
-    leave-one-out validation of the emulator. 
+Description: This code reproduces the main results and sensitivity tests for 
+    Antarctic projections at 2100 from Edwards et al. (2019) Nature. The only 
+    aspects not included are non-2100 results and leave-one-out validation of 
+    the emulator. 
 URL: https://github.com/tamsinedwards/revisitmici
 BugReports: https://github.com/tamsinedwards/revisitmici/issues
 License: CC0

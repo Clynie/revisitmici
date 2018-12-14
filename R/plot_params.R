@@ -1,19 +1,25 @@
-plot_params <-
-  function(sim_inputs, sim_outputs, em_data, var_plot = "RCP85_2100", param_list = c("VCLIF", "CREVLIQ", "OCFAC")) {
+plot_params <- function(sim_inputs, sim_outputs, em_data,
+                        var_plot = "RCP85_2100",
+                        param_list = c("VCLIF", "CREVLIQ", "OCFAC")) {
   #' Plot RCP8.5 projections at 2100 versus three parameters.
   #'
-  #' For Extended Data Figure 3. In theory, this can be used to plot any emulated variables vs parameters,
-  #' i.e. using any member of vars_to_emulate in main() (three past eras and three RCPs at 2100) as the option var_plot, but this is untested.
-  #' Similarly, using a non-standard param_list (i.e. fewer than these 3, or "BIAS") is untested.
+  #' For Extended Data Figure 3. In theory, this can be used to plot any
+  #' emulated variables vs parameters, i.e. using any member of
+  #' vars_to_emulate in main() (three past eras and three RCPs at 2100) as
+  #' the option var_plot, but this is untested. Similarly, using a
+  #' non-standard param_list (i.e. fewer than these 3, or "BIAS") is
+  #' untested.
   #' @param sim_inputs Simulator parameter values.
   #' @param sim_outputs Simulator variable values.
   #' @param em_data Emulator parameter and variable values.
-  #' @param var_plot Variable to plot (deprecated: only RCP8.5 at 2100 is tested).
-  #' @param param_list List of parameters (deprecated: only this list is tested).
+  #' @param var_plot Variable to plot (deprecated: only RCP8.5 at 2100 is
+  #' tested).
+  #' @param param_list List of parameters (deprecated: only this list is
+  #' tested).
 
-  # ____________________________________________________________________________
+  # __________________________________________________________________________
   # EXTENDED DATA FIGURE 7: RCP8.5 at 2100 vs 3 parameters
-  # ____________________________________________________________________________
+  # __________________________________________________________________________
   print("PlotParams(): Plotting RCP8.5 at 2100 vs parameters")
 
   tiff(
@@ -35,7 +41,9 @@ plot_params <-
   # (in reverse order so VCLIF first subfigure)
   for (param in param_list[3:1]) {
     ticks_y <- seq(min(e$var_breaks[[var_plot]]),
-                   max(e$var_breaks[[var_plot]]), by = 50)
+      max(e$var_breaks[[var_plot]]),
+      by = 50
+    )
     if (param %in% c("VCLIF", "OCFAC")) {
       ticks_x <- seq(-1, max(sim_inputs[, param]) + 1)
     } else {

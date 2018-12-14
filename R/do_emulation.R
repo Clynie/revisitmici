@@ -2,8 +2,8 @@ emulate_era <- function(sim_inputs, sim_outputs, myvar, trend, covtype,
                         expt_design_par) {
   #' Gaussian process emulation.
   #'
-  #' Calibrate GP model with DeConto and Pollard simulator data and predict values at large set of new
-  #' parameter values. Uses DiceKriging package.
+  #' Calibrate GP model with DeConto and Pollard simulator data and predict
+  #' values at large set of new parameter values. Uses DiceKriging package.
   #'
   #' @param sim_inputs Simulator ensemble inputs, i.e. parameter values.
   #' @param sim_outputs Simulator ensemble outputs, i.e. variable values.

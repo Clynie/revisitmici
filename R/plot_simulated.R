@@ -30,37 +30,34 @@ plot_simulated <- function(sim_data, calib_sim, pliocene_range, chebyshev) {
 
       # Open plot (RCP8.5 only)
       if (myvar == "RCP85_2100") {
+        if (pliocene_range == "low") plioplotname <- "ED_Fig2ab"
+        if (pliocene_range == "high") plioplotname <- "ED_Fig2cd"
 
-      if (pliocene_range == "low") plioplotname <- "ED_Fig2ab"
-      if (pliocene_range == "high") plioplotname <- "ED_Fig2cd"
+        tiff(
+          filename = sprintf(
+            "%s/%s_Plio%s.tiff", e$outpath, plioplotname,
+            pliocene_range
+          ), width = 7.2, height = 3.5,
+          units = "in", res = 300
+        )
+        layout(t(1:2), TRUE)
 
-      tiff(
-        filename = sprintf(
-          "%s/%s_Plio%s.tiff", e$outpath, plioplotname,
-          pliocene_range
-        ), width = 7.2, height = 3.5,
-        units = "in", res = 300
-      )
-      layout(t(1:2), TRUE)
+        # fix par after tiff changes it
+        par(pin = c(7.2, 3.5))
+        par(plt = c(1, 1, 1, 1))
 
-      # fix par after tiff changes it
-      par(pin = c(7.2, 3.5))
-      par(plt = c(1, 1, 1, 1))
+        op <- par(no.readonly = TRUE)
+        par(
+          mar = c(1.3, 1.3, 0.3, 0.5), oma = c(1, 1.2, 0.1, 0), tcl = -0.3,
+          mgp = c(0, 0.5, 0), xpd = TRUE
+        )
 
-      op <- par(no.readonly = TRUE)
-      par(
-        mar = c(1.3, 1.3, 0.3, 0.5), oma = c(1, 1.2, 0.1, 0), tcl = -0.3,
-        mgp = c(0, 0.5, 0), xpd = TRUE
-      )
-
-      size_axis_fig1 <- 0.6
-      size_lab_fig1 <- 0.6
-
+        size_axis_fig1 <- 0.6
+        size_lab_fig1 <- 0.6
       }
 
       # Separate results for bias on and off as in DP16
       for (dobias in c(0, 1)) {
-
         if (dobias == 0) bias_name <- "off"
         if (dobias == 1) bias_name <- "on"
 
@@ -148,8 +145,10 @@ plot_simulated <- function(sim_data, calib_sim, pliocene_range, chebyshev) {
           )
 
           # Plot histograms over the top
-          hist(sim_prior, breaks = e$var_breaks[[myvar]],
-               col = grey(0.9), add = TRUE)
+          hist(sim_prior,
+            breaks = e$var_breaks[[myvar]],
+            col = grey(0.9), add = TRUE
+          )
           hist(sim_post,
             breaks = e$var_breaks[[myvar]], col = e$cols_rcp_dark[[myrcp]],
             add = TRUE
@@ -162,8 +161,10 @@ plot_simulated <- function(sim_data, calib_sim, pliocene_range, chebyshev) {
             mean(sim_post) + chebyshev[["68%"]] * sd(sim_post)
           ), cex = size_lab_fig1)
           lines(
-            x = c(mean(sim_post) - chebyshev[["68%"]] * sd(sim_post),
-                  mean(sim_post) + chebyshev[["68%"]] * sd(sim_post)),
+            x = c(
+              mean(sim_post) - chebyshev[["68%"]] * sd(sim_post),
+              mean(sim_post) + chebyshev[["68%"]] * sd(sim_post)
+            ),
             y = rep(ymax - 1, 2), lwd = 1.2
           )
           lines(
@@ -198,7 +199,8 @@ plot_simulated <- function(sim_data, calib_sim, pliocene_range, chebyshev) {
           )
           rect(xmaxleg + 8, 6.1, xmaxleg + 18, 6.3, col = grey(0.9))
           rect(xmaxleg + 8, 5.3, xmaxleg + 18, 5.5,
-               col = e$cols_rcp_dark[[myrcp]])
+            col = e$cols_rcp_dark[[myrcp]]
+          )
 
           if (pliocene_range == "low") {
             if (bias_name == "off") sublabel <- "a"
@@ -216,8 +218,8 @@ plot_simulated <- function(sim_data, calib_sim, pliocene_range, chebyshev) {
       } # select bias on/off
 
       if (myvar == "RCP85_2100") {
-      dev.off()
-      par(op)
+        dev.off()
+        par(op)
       }
     } # use only future variables
   } # loop all variables

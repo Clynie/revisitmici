@@ -2,14 +2,17 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
                                var_future = "RCP85_2100", dobias = NA) {
   #' Plot sensitivity of projections to Pliocene minimum value.
   #'
-  #' For Extended Data Figure 1a,b (source = "Simulated") and c (source = "Emulated").
-  #' In theory other RCPs can be plotted, but this is untested.
+  #' For Extended Data Figure 1a,b (source = "Simulated") and
+  #' c (source = "Emulated"). In theory other RCPs can be plotted, but this is
+  #' untested.
   #' @param dataset Dataset to use, whether simulated or emulated.
-  #' @param calib_data List of calibration data: c(mean, sd) for Pliocene, LIG and present.
-  #' See main() for expected list names.
-  #' @param calib_em Calibration index for emulated ensemble: do not use for source = "Simulated".
+  #' @param calib_data List of calibration data: c(mean, sd) for Pliocene, LIG
+  #' and present. List names are set in main(): "PLIO", "LIG" and "RCP45_pres".
+  #' @param calib_em Calibration index for emulated ensemble: do not use for
+  #' source = "Simulated".
   #' @param source Data type: "Simulated" or "Emulated".
-  #' @param var_future Variable to plot vs Pliocene minimum (Deprecated: only tested for RCP8.5 at 2100).
+  #' @param var_future Variable to plot vs Pliocene minimum (Deprecated: only
+  #' tested for RCP8.5 at 2100).
   #' @param dobias Bias on or off (simulated only) or both (for emulated).
   #' @examples
   #' \dontrun{
@@ -28,7 +31,7 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
 
   # ____________________________________________________________________________
   # PLOT SENSITIVITY OF RESULTS TO PLIOCENE LOWER BOUND
-  # Extended Data Figure 2
+  # Extended Data Figure 1
   # ____________________________________________________________________________
   print(paste(
     "PlotSensPliocene(): Plotting sensitivity of",
@@ -37,7 +40,9 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
 
   # Pass args to relevant names
   if (source == "Simulated") {
-    if (!is.null(calib_em)) warning("Do not provide calib_em for simulated dataset option")
+    if (!is.null(calib_em)) {
+      warning("Do not provide calib_em for simulated dataset option")
+    }
     sim_data <- dataset
   }
   if (source == "Emulated") {
@@ -48,7 +53,8 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
     }
     if (is.null(calib_em)) {
       warning("Must provide calibration index for emulated data",
-              immediate = TRUE)
+        immediate = TRUE
+      )
       return
     }
     em_data <- dataset
@@ -110,10 +116,12 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
     # Max is written as central value plus width
     if (source == "Simulated") {
       sim_plio_post <-
-        sim_lig_post[sim_lig_post$PLIO > plio_min &
-                       sim_lig_post$PLIO <
-                       (calib_data[["PLIO"]][1] + calib_data[["PLIO"]][2]),
-                     var_future]
+        sim_lig_post[
+          sim_lig_post$PLIO > plio_min &
+            sim_lig_post$PLIO <
+              (calib_data[["PLIO"]][1] + calib_data[["PLIO"]][2]),
+          var_future
+        ]
     }
     # Calibrate emulated with Pliocene and LIG
     if (source == "Emulated") {
@@ -124,22 +132,21 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
         plio_min, calib_data[["PLIO"]][1] + calib_data[["PLIO"]][2]
       ))
       plio_err <- plio_obs - plio_min
-      tot_err_down <- sqrt((plio_err ** 2 + e$discrep[["PLIO"]] ** 2 +
-                              em_data[, "PLIO_sd"] ** 2))
+      tot_err_down <- sqrt((plio_err**2 + e$discrep[["PLIO"]]**2 +
+        em_data[, "PLIO_sd"]**2))
 
       # Error up i.e. for upper bound is usual mean + usual total error
-      tot_err_up <- sqrt((calib_data[["PLIO"]][2] ** 2 +
-                            e$discrep[["PLIO"]] ** 2 +
-                            em_data[, "PLIO_sd"] ** 2))
+      tot_err_up <- sqrt((calib_data[["PLIO"]][2]**2 +
+        e$discrep[["PLIO"]]**2 +
+        em_data[, "PLIO_sd"]**2))
 
       # Indices
       calib_plio_down <- em_data[, "PLIO"] > plio_obs - tot_err_down
       calib_plio_up <- em_data[, "PLIO"] < calib_data[["PLIO"]][1] + tot_err_up
 
-      # Calibration of emulated with present, LIG and current Pliocene range is here
+      # Calibration of emulated with present, LIG and current Pliocene range
       em_plio_post <- em_data[calib_em[["present"]] & calib_em[["LIG"]] &
-                              calib_plio_up & calib_plio_down, var_future]
-
+        calib_plio_up & calib_plio_down, var_future]
     }
 
     # If found data OK then calculate mean + sd / quantiles + mode
@@ -171,13 +178,21 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
       axes = FALSE, frame.plot = TRUE, xlab = "", ylab = "",
       ylim = range(e$var_breaks[[var_future]]), yaxs = "i",
       xlim = range(pliocene_minima), xaxs = "i", main = ""
-      )
+    )
 
     # Y axes
-    ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 50)
-    minor_ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 10)
-    axis(side = 2, at = ticks_y, labels = ticks_y,
-         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    ticks_y <- seq(min(e$var_breaks[[var_future]]),
+      max(e$var_breaks[[var_future]]),
+      by = 50
+    )
+    minor_ticks_y <- seq(min(e$var_breaks[[var_future]]),
+      max(e$var_breaks[[var_future]]),
+      by = 10
+    )
+    axis(
+      side = 2, at = ticks_y, labels = ticks_y,
+      cex.axis = size_axis_fig2, cex.lab = size_lab_fig2
+    )
     axis(side = 2, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
     axis(side = 4, at = ticks_y, labels = FALSE)
     axis(side = 4, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
@@ -193,8 +208,10 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
     # X axis
     ticks_x <- seq(min(pliocene_minima), max(pliocene_minima))
     minor_ticks_x <- seq(min(pliocene_minima), max(pliocene_minima), by = 0.2)
-    axis(side = 1, at = ticks_x, labels = ticks_x,
-         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    axis(
+      side = 1, at = ticks_x, labels = ticks_x,
+      cex.axis = size_axis_fig2, cex.lab = size_lab_fig2
+    )
     axis(side = 1, at = minor_ticks_x, labels = FALSE, tcl = 0.1)
     mtext("Lower bound Pliocene (m SLE)",
       side = 1, line = 1.1,
@@ -233,7 +250,6 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
   # ____________________________________________________________________________
 
   if (source == "Emulated") {
-
     plot(pliocene_minima, em_plio_quantiles[["0.5"]],
       type = "l", col = e$cols_rcp_dark[[myrcp]], lwd = 2,
       xlab = "", ylab = "", main = "", axes = FALSE, frame.plot = TRUE,
@@ -242,10 +258,18 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
     )
 
     # Y axes
-    ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 50)
-    minor_ticks_y <- seq(min(e$var_breaks[[var_future]]), max (e$var_breaks[[var_future]]), by = 10)
-    axis(side = 2, at = ticks_y, labels = ticks_y,
-         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    ticks_y <- seq(min(e$var_breaks[[var_future]]),
+      max(e$var_breaks[[var_future]]),
+      by = 50
+    )
+    minor_ticks_y <- seq(min(e$var_breaks[[var_future]]),
+      max(e$var_breaks[[var_future]]),
+      by = 10
+    )
+    axis(
+      side = 2, at = ticks_y, labels = ticks_y,
+      cex.axis = size_axis_fig2, cex.lab = size_lab_fig2
+    )
     axis(side = 2, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
     axis(side = 4, at = ticks_y, labels = FALSE)
     axis(side = 4, at = minor_ticks_y, labels = FALSE, tcl = 0.1)
@@ -256,8 +280,10 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
     # X axis
     ticks_x <- seq(min(pliocene_minima), max(pliocene_minima))
     minor_ticks_x <- seq(min(pliocene_minima), max(pliocene_minima), by = 0.2)
-    axis(side = 1, at = ticks_x, labels = ticks_x,
-         cex.axis = size_axis_fig2, cex.lab = size_lab_fig2)
+    axis(
+      side = 1, at = ticks_x, labels = ticks_x,
+      cex.axis = size_axis_fig2, cex.lab = size_lab_fig2
+    )
     axis(side = 1, at = minor_ticks_x, labels = FALSE, tcl = 0.1)
     mtext("Lower bound Pliocene (m SLE)",
       side = 1, line = 1.1, cex = size_lab_fig2
@@ -279,7 +305,6 @@ plot_sens_pliocene <- function(dataset, calib_data, calib_em = NULL, source,
   abline(v = 5.0, lwd = 0.5, col = "darkgrey")
   abline(v = 10.0, lwd = 0.5, col = "darkgrey")
   text(0, 0.95 * max(e$var_breaks[[var_future]]), sublabel,
-       font = 2, cex = 0.7, pos = 4
+    font = 2, cex = 0.7, pos = 4
   )
-
 }
