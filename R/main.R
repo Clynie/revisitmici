@@ -98,6 +98,13 @@ main <- function(analysis_type, test = FALSE, calib_era = "threeEras",
   #' @param VCLIF_max Maximum ice wastage parameter value in km per year.
   #' Default = 5 and cannot be larger. Sensitivity analysis in ED Figure 5 uses
   #' 4 km/a.
+  #' @return Creates a ./results/ directory with the output of the analysis.
+  #' $DATESTAMP is the current date and time in YY-mm-dd--HH-MM-SS format.
+  #' output--$DATESTAMP.txt: Human-readable analysis settings and results.
+  #' data--$DATESTAMP.txt: CSV of main results (if emulating).
+  #' stats--$DATESTAMP.txt: output of emulation from do_emulation.R (if emulating).
+  #' Main_Fig*.pdf: Main paper figures in pdf format.
+  #' ED_Fig*.tiff: Extended Data figures in TIFF format.
   #' @examples
   #' \dontrun{
   #' # Main projections:
@@ -265,6 +272,10 @@ main <- function(analysis_type, test = FALSE, calib_era = "threeEras",
 
   # Text files stamped by date and time
   e$outpath <- "./results"
+  if (!dir.exists(e$outpath)) {
+    print(paste("Creating directory for output:", e$outpath))
+    dir.create(e$outpath)
+  }
   e$outfile_text <- sprintf("%s/output--%s.txt", e$outpath, e$date_time)
   e$outfile_stats <- sprintf("%s/stats--%s.txt", e$outpath, e$date_time)
   e$outfile_data <- sprintf("%s/data--%s.txt", e$outpath, e$date_time)

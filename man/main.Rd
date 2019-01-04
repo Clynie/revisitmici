@@ -11,36 +11,54 @@ main(analysis_type, test = FALSE, calib_era = "threeEras",
 \arguments{
 \item{analysis_type}{Analysis type. Options: "MICI", "NoMICI" or "SimHigh".}
 
-\item{test}{If TRUE, sets emulator ensemble size to N = 500 instead of 10,000.}
+\item{test}{If TRUE, sets emulator ensemble size to N = 500 instead of
+10,000.}
 
-\item{calib_era}{Which eras to calibrate with. Default = "threeEras" (Pliocene, Last interglacial
-and 1992-2017). Other options = "palaeo" (Pliocene and LIG only), "present" (1992-2017 only).
-If "palaeo" or "present", then only plot Figure 1 (as ED Figure 1c assumes all three eras used
-and other ED figures do not change).}
+\item{calib_era}{Which eras to calibrate with. Default = "threeEras"
+(Pliocene, Last interglacial and 1992-2017). Other options = "palaeo"
+(Pliocene and LIG only), "present" (1992-2017 only).
+If "palaeo" or "present", then only plot Figure 1 (as ED Figure 1c
+assumes all three eras used and other ED figures do not change).}
 
 \item{discrep_PLIO}{Pliocene model discrepancy in metres. Default = 5.
 Set to 0 or 10 for sensitivity analyses in ED Figure 5. If provided, then
 only plot Figure 1.}
 
-\item{discrep_LIG}{Last Interglacial model discrepancy in metres. Default = 2.
-Set to 0 or 4 for sensitivity analyses in ED Figure 5. If provided, then only plot Figure 1.}
+\item{discrep_LIG}{Last Interglacial model discrepancy in metres.
+Default = 2. Set to 0 or 4 for sensitivity analyses in ED Figure 5.
+If provided, then only plot Figure 1.}
 
 \item{discrep_present}{1992-2017 model discrepancy in cm. Default = 0.5.
-Set to 0 or 1 for sensitivity analyses in ED Figure 5. If provided, then only plot Figure 1.}
+Set to 0 or 1 for sensitivity analyses in ED Figure 5. If provided,
+then only plot Figure 1.}
 
-\item{VCLIF_max}{Maximum ice wastage parameter value in km per year. Default = 5 and cannot be larger.
-Sensitivity analysis in ED Figure 5 uses 4 km/a.}
+\item{VCLIF_max}{Maximum ice wastage parameter value in km per year.
+Default = 5 and cannot be larger. Sensitivity analysis in ED Figure 5 uses
+4 km/a.}
+}
+\value{
+Creates a ./results/ directory with the output of the analysis.
+$DATESTAMP is the current date and time in YY-mm-dd--HH-MM-SS format.
+output--$DATESTAMP.txt: Human-readable analysis settings and results.
+data--$DATESTAMP.txt: CSV of main results (if emulating).
+stats--$DATESTAMP.txt: output of emulation from do_emulation.R (if emulating).
+Main_Fig*.pdf: Main paper figures in pdf format.
+ED_Fig*.tiff: Extended Data figures in TIFF format.
 }
 \description{
-This is the main steering function to run the analysis for "Revisiting Antarctic ice loss due to marine ice
-cliff instability", producing figures and numerical output for Antarctic projections at 2100. Uses
-lhs package to generate maximin Latin Hypercube design points. All results for figures and tables
-can be generated except timeseries projections (Figures 2, 3) and emulator validation (Figure 6).
-Results are given for Figure 4 and ED Figure 5, but the manuscript figures are not plotted.
+This is the main steering function to run the analysis for Edwards et al.
+(2019) "Revisiting Antarctic ice loss due to marine ice cliff instability",
+Nature, producing figures and numerical output for Antarctic projections
+at 2100. Uses lhs package to generate maximin Latin Hypercube design
+points. All results for figures and tables can be generated except
+timeseries projections (Figures 2, 3) and emulator validation (Figure 6).
+Results are given for Figure 4 and ED Figure 5, but the manuscript figures
+are not plotted.
 }
 \details{
-All argument combinations to reproduce results are given in "Examples" below. N.B. Currently does not check
-if any calibration arguments are provided but unused in analysis type: will just ignore them.
+All argument combinations to reproduce results are given in "Examples"
+below. N.B. Currently does not check if any calibration arguments are
+provided but unused in analysis type: will just ignore them.
 }
 \examples{
 \dontrun{

@@ -21,6 +21,6 @@ emulate_era(sim_inputs, sim_outputs, myvar, trend, covtype,
 \item{expt_design_par}{Parameter values at which to make predictions.}
 }
 \description{
-Calibrate GP model with DeConto and Pollard simulator data and predict values at large set of new
-parameter values. Uses DiceKriging package.
+Calibrate GP model with DeConto and Pollard simulator data and predict
+values at large set of new parameter values. Uses DiceKriging package.
 }

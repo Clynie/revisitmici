@@ -10,20 +10,23 @@ plot_sens_pliocene(dataset, calib_data, calib_em = NULL, source,
 \arguments{
 \item{dataset}{Dataset to use, whether simulated or emulated.}
 
-\item{calib_data}{List of calibration data: c(mean, sd) for Pliocene, LIG and present.
-See main() for expected list names.}
+\item{calib_data}{List of calibration data: c(mean, sd) for Pliocene, LIG
+and present. List names are set in main(): "PLIO", "LIG" and "RCP45_pres".}
 
-\item{calib_em}{Calibration index for emulated ensemble: do not use for source = "Simulated".}
+\item{calib_em}{Calibration index for emulated ensemble: do not use for
+source = "Simulated".}
 
 \item{source}{Data type: "Simulated" or "Emulated".}
 
-\item{var_future}{Variable to plot vs Pliocene minimum (Deprecated: only tested for RCP8.5 at 2100).}
+\item{var_future}{Variable to plot vs Pliocene minimum (Deprecated: only
+tested for RCP8.5 at 2100).}
 
 \item{dobias}{Bias on or off (simulated only) or both (for emulated).}
 }
 \description{
-For Extended Data Figure 1a,b (source = "Simulated") and c (source = "Emulated").
-In theory other RCPs can be plotted, but this is untested.
+For Extended Data Figure 1a,b (source = "Simulated") and
+c (source = "Emulated"). In theory other RCPs can be plotted, but this is
+untested.
 }
 \examples{
 \dontrun{
