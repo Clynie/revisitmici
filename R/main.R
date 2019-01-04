@@ -100,11 +100,16 @@ main <- function(analysis_type, test = FALSE, calib_era = "threeEras",
   #' 4 km/a.
   #' @return Creates a ./results/ directory with the output of the analysis.
   #' $DATESTAMP is the current date and time in YY-mm-dd--HH-MM-SS format.
-  #' output--$DATESTAMP.txt: Human-readable analysis settings and results.
-  #' data--$DATESTAMP.txt: CSV of main results (if emulating).
-  #' stats--$DATESTAMP.txt: output of emulation from do_emulation.R (if emulating).
+  #'
   #' Main_Fig*.pdf: Main paper figures in pdf format.
+  #'
   #' ED_Fig*.tiff: Extended Data figures in TIFF format.
+  #'
+  #' output--$DATESTAMP.txt: Human-readable analysis settings and results.
+  #'
+  #' data--$DATESTAMP.txt: CSV of main results (if emulating).
+  #'
+  #' stats--$DATESTAMP.txt: output of emulation from do_emulation.R (if emulating).
   #' @examples
   #' \dontrun{
   #' # Main projections:

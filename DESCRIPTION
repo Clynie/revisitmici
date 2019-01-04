@@ -1,7 +1,7 @@
 Package: revisitmici
 Type: Package
 Title: Analysis code for Edwards et al. (2019) Nature, "Revisiting Antarctic ice loss due to marine ice cliff instability"
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: person("Tamsin", "Edwards", email = "tamsin.edwards@kcl.ac.uk",
   role = c("aut", "cre"))
 Maintainer: Tamsin L. Edwards <tamsin.edwards@kcl.ac.uk>
